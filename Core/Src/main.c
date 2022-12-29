@@ -48,6 +48,7 @@ float actual_speed ;
 float set_speed = 0 ;
 float error_speed = 0 ;
 float angle;
+float speed ;
 /* USER CODE END PM */
 
 /* Private variables ---------------------------------------------------------*/
@@ -61,8 +62,11 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef* htim)
 {
 	AS5600_TypeDef* sensor = AS5600_new();
 	AS5600_init(sensor);
+	uint32_t time = micros();
     angle = AS5600_get_angle(sensor, &angle);
-
+    int time_spent = time - prev_time;
+    speed = angle/time_spent;
+    prev_time = time;
    //RPM IS STILL NEED TO BE CALCULATED NOT I WILL USE MICROS FOR DELTA TIME
 }
 
